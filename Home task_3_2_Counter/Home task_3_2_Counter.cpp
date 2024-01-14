@@ -6,21 +6,14 @@ class Counter
 {
 private:
     int count;
-    const std::string yes = "yes";
-    std::string init_count_choice;
+   
 public:
     Counter() : count(1)
     { }
-    void setCounter() {
-        std::cout << "Вы хотите указать начальное значение счётчика? Введите 'yes' или 'no': ";
-        std::cin >> init_count_choice;
-        if (init_count_choice == yes) {
-            std::cout << "Введите начальное значение счётчика: ";
-            int count_0;
-            std::cin >> count_0;
-            count = count_0;
-        };
-    }
+
+    Counter(int custom_count) : count(custom_count)
+    { }
+  
     void increment() {
         count++;
     }
@@ -28,28 +21,7 @@ public:
         count--;
     }
     int getCounter() const {
-        std::cout << count << std::endl;
         return count;
-    }
-    int halt() const {
-        std::cout << "До свидания!" << std::endl;
-        return 0;
-    }
-    char incr() const {
-        char incr = '+';
-        return incr;
-    }
-    char dcr() const  {
-        char dcr = '-';
-        return dcr;
-    }
-     char gt() const {
-        char gt = '=';
-        return gt;
-    }
-     char hlt() const {
-        char hlt = 'x';
-        return hlt;
     }
 };
 
@@ -57,28 +29,66 @@ int main(int argc, char** argv)
 {
     setlocale(LC_ALL, "Russian");
 
-    Counter counter;
-    counter.setCounter();
+    const char incr = '+';
+    const char dcr = '-';
+    const char gt = '=';
+    const char hlt = 'x';
+
+    int custom_count;
+    const std::string yes = "yes";
+    std::string init_count_choice;
     char command;
 
-    do {
-        std::cout << "Введите команду ('+', '-', '=' или 'x'): ";
-        std::cin >> command;
-
-        if (command == counter.incr()) {
-            counter.increment();
-        }
-        else
-            if (command == counter.dcr()) {
-                counter.decrement();
+    std::cout << "Вы хотите указать начальное значение счётчика? Введите 'yes' или 'no': ";
+    std::cin >> init_count_choice;
+    if (init_count_choice == yes) {
+        std::cout << "Введите начальное значение счётчика: ";
+        std::cin >> custom_count;
+        Counter C1(custom_count);
+        do {
+            std::cout << "Введите команду ('+', '-', '=' или 'x'): ";
+            std::cin >> command;
+            
+            switch (command) {
+            case(incr):
+                C1.increment();
+                break;
+            case(dcr):
+                C1.decrement();
+                break;
+            case(gt):
+                std::cout << C1.getCounter() << std::endl;
+                break;
+            default:
+                break;
             }
-            else
-                if (command == counter.gt()) {
-                    counter.getCounter();
-                };
-    } while (command != counter.hlt());
+        } while (command != hlt);
 
-    counter.halt();
+    }
+    else {
+        Counter C2; 
+        do {
+            std::cout << "Введите команду ('+', '-', '=' или 'x'): ";
+            std::cin >> command;
+
+            switch (command) {
+            case(incr):
+                C2.increment();
+                break;
+            case(dcr):
+                C2.decrement();
+                break;
+            case(gt):
+                std::cout << C2.getCounter() << std::endl;
+                break;
+            default:
+                break;
+            }
+        } while (command != hlt);
+
+    };
+
+    std::cout << "До свидания!" << std::endl;
 
     return 0;
 }
